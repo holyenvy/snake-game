@@ -1,7 +1,7 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 const grid = 20;
-let snake, apple, score, running, speed, frameInterval, started = false;
+let snake, apple, score, running, speed, frameInterval;
 let ranking = JSON.parse(localStorage.getItem('snakeRanking') || '[]');
 
 const SPEEDS = {
@@ -45,8 +45,7 @@ function resetGame() {
 }
 
 function startGame() {
-  if (started) return;
-  started = true;
+  resetGame();
   running = true;
   document.getElementById('startBtn').disabled = true;
   document.getElementById('restartBtn').disabled = true;
@@ -55,9 +54,7 @@ function startGame() {
 }
 
 function restartGame() {
-  resetGame();
-  started = false;
-  document.getElementById('startBtn').disabled = false;
+  startGame();
 }
 
 function getRandomInt(min, max) {
@@ -66,7 +63,6 @@ function getRandomInt(min, max) {
 
 function gameOver() {
   running = false;
-  started = false;
   document.getElementById('gameover').style.display = 'block';
   document.getElementById('restartBtn').disabled = false;
   document.getElementById('startBtn').disabled = false;
